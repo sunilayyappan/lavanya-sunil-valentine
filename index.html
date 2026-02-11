@@ -9,22 +9,18 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins}
+body{height:100vh;overflow:hidden;background:black}
 
-body{
-height:100vh;
-overflow:hidden;
-}
-
-/* PASSWORD SCREEN */
+/* PASSWORD */
 #lock{
 position:fixed;inset:0;
 background:linear-gradient(135deg,#ff416c,#ff4b2b);
 display:flex;align-items:center;justify-content:center;
-z-index:99;color:white;
+z-index:99;color:white;text-align:center;
 }
 .lock-box{
 background:rgba(255,255,255,0.2);
-padding:30px;border-radius:20px;text-align:center;
+padding:30px;border-radius:20px;
 }
 .lock-box input{
 padding:12px;border:none;border-radius:20px;width:220px;text-align:center;
@@ -34,133 +30,117 @@ margin-top:15px;padding:10px 25px;border:none;border-radius:20px;
 background:#fff;color:#ff416c;font-weight:bold;cursor:pointer;
 }
 
-/* MAIN SCREEN */
+/* MAIN */
 .card{
 background:linear-gradient(135deg,#ff758c,#ff7eb3);
 height:100vh;width:100%;
 display:flex;flex-direction:column;
 align-items:center;justify-content:center;
 text-align:center;color:white;
+position:relative;
 }
-.card h1{font-family:'Great Vibes';font-size:50px}
-.buttons{margin-top:20px}
+.card h1{font-family:'Great Vibes';font-size:55px}
+.buttons{margin-top:20px;position:relative}
 button{
 border:none;padding:12px 25px;border-radius:25px;font-size:16px;
-cursor:pointer;
+cursor:pointer;transition:0.3s;
 }
 .yes{background:white;color:#ff1f4a}
-.no{background:#ff1f4a;color:white}
+.no{
+background:#ff1f4a;color:white;
+position:absolute;
+}
 
-/* SURPRISE CINEMATIC */
+/* SURPRISE */
 #surprise{
 display:none;
 position:fixed;
 inset:0;
 background:url("us.jpg") center/cover no-repeat;
-display:flex;
 align-items:center;
 justify-content:center;
 text-align:center;
 overflow:hidden;
 }
 
-/* Dreamy Overlay */
+/* Overlay */
 .overlay{
-position:absolute;
-inset:0;
+position:absolute;inset:0;
 background:
 linear-gradient(135deg, rgba(255,182,193,0.3), rgba(255,105,180,0.2)),
-radial-gradient(circle at center, rgba(255,255,255,0.2), rgba(0,0,0,0.6));
-backdrop-filter:blur(4px);
-}
-
-/* Soft vignette */
-.overlay::after{
-content:"";
-position:absolute;
-inset:0;
-box-shadow:inset 0 0 200px rgba(0,0,0,0.6);
+radial-gradient(circle at center, rgba(255,255,255,0.15), rgba(0,0,0,0.7));
+backdrop-filter:blur(5px);
 }
 
 /* Content */
 .content{
-position:relative;
-z-index:2;
-max-width:700px;
-padding:30px;
-color:white;
-animation:slowZoom 60s ease-in-out forwards;
-}
-
-/* Subtle cinematic zoom */
-@keyframes slowZoom{
-0%{transform:scale(1);}
-100%{transform:scale(1.06);}
+position:relative;z-index:2;
+max-width:750px;padding:30px;color:white;
+text-shadow:0 0 20px rgba(0,0,0,0.7);
 }
 
 /* Text lines */
 .text-line{
 opacity:0;
-font-size:clamp(16px,2.5vh,24px);
-margin:8px 0;
-transition:opacity 2s ease;
+font-size:clamp(16px,2.4vh,24px);
+margin:10px 0;
+transition:opacity 2.5s ease;
 }
-
 .forever{
 opacity:0;
 margin-top:20px;
-font-size:clamp(24px,3vh,34px);
+font-size:clamp(24px,3vh,36px);
 font-family:'Great Vibes';
 transition:opacity 3s ease;
 }
 
+/* Glow for emotional peak */
+.glow {
+  text-shadow:
+    0 0 10px rgba(255,255,255,0.9),
+    0 0 20px rgba(255,105,180,0.8),
+    0 0 40px rgba(255,20,147,0.7);
+}
+
 /* Final button */
 #finalBtn{
-display:none;
-margin-top:25px;
-padding:14px 35px;
-border:none;
-border-radius:30px;
-font-size:18px;
-background:white;
-color:#ff1f4a;
+display:none;margin-top:25px;
+padding:14px 35px;border:none;border-radius:30px;
+font-size:18px;background:white;color:#ff1f4a;
 cursor:pointer;
 }
-
 #finalMessage{
-display:none;
-margin-top:15px;
-font-size:20px;
+display:none;margin-top:15px;font-size:20px;
 }
 
-/* Dreamy Bokeh */
-.bokeh{
+/* Floating Hearts */
+.heart{
 position:absolute;
-width:12px;
-height:12px;
-background:rgba(255,255,255,0.4);
+color:rgba(255,255,255,0.8);
+font-size:20px;
+animation:floatUp 10s linear infinite;
+}
+@keyframes floatUp{
+0%{transform:translateY(100vh);opacity:0}
+10%{opacity:1}
+90%{opacity:1}
+100%{transform:translateY(-10vh);opacity:0}
+}
+
+/* Sparkles */
+.sparkle{
+position:absolute;
+width:4px;height:4px;
+background:white;
 border-radius:50%;
-filter:blur(4px);
 opacity:0;
-animation:bokehFloat 20s linear infinite;
+animation:sparkle 6s linear infinite;
 }
-
-@keyframes bokehFloat{
-0%{transform:translateY(100vh) scale(0.5);opacity:0}
-10%{opacity:0.5}
-90%{opacity:0.5}
-100%{transform:translateY(-10vh) scale(1.2);opacity:0}
+@keyframes sparkle{
+0%{opacity:0}
+50%{opacity:1}
+100%{opacity:0}
 }
-
-/* Fade to white ending */
-.fade-white{
-animation:fadeToWhite 3s forwards;
-}
-@keyframes fadeToWhite{
-from{opacity:1}
-to{opacity:0;background:white;}
-}
-
 </style>
 </head>
 
@@ -177,8 +157,7 @@ to{opacity:0;background:white;}
   </div>
 </div>
 
-<!-- MUSIC -->
-<audio id="music" loop playsinline preload="auto">
+<audio id="music" loop>
   <source src="Minnale-Theme-Music.mp3" type="audio/mp3">
 </audio>
 
@@ -188,15 +167,13 @@ to{opacity:0;background:white;}
   <p>Will you be my Valentine?</p>
   <div class="buttons">
     <button class="yes" onclick="yes()">Yes 💖</button>
-    <button class="no">No 😅</button>
+    <button class="no" id="noBtn">No 😅</button>
   </div>
 </div>
 
 <!-- SURPRISE -->
 <div id="surprise">
-
   <div class="overlay"></div>
-
   <div class="content">
 
     <div class="text-line" id="t1">Lavanya…</div>
@@ -226,13 +203,15 @@ to{opacity:0;background:white;}
     </div>
 
     <div class="text-line" id="t7">
-      Nee vandhadaala en life la oru change illa…
-      Nee dhaan en life.
+      You are not in my world…
+      you are my world.
     </div>
 
     <div class="text-line" id="t8">
-      Un kooda irundha neram ellam,
-      konjam slow a poganum nu thonum.
+      You are the reason I believe in forever.
+      The one my heart chooses without hesitation —
+      today, tomorrow,
+      and every single day after that.
     </div>
 
     <div class="text-line" id="t9">
@@ -246,7 +225,6 @@ to{opacity:0;background:white;}
     </div>
 
     <button id="finalBtn" onclick="finalChoice()">I choose you ❤️</button>
-
     <div id="finalMessage">
       And I will keep choosing you. Every single day. 💖
     </div>
@@ -256,72 +234,95 @@ to{opacity:0;background:white;}
 
 <script>
 
-// PASSWORD
+// Unlock
 function unlock(){
   if(document.getElementById("pass").value === "05-12-2024"){
     document.getElementById("lock").style.display="none";
+    if(document.documentElement.requestFullscreen){
+      document.documentElement.requestFullscreen();
+    }
   } else {
     alert("Oops 😅 Try again");
   }
 }
 
-// YES FLOW
+// Yes
 function yes(){
-  const music = document.getElementById("music");
-  music.volume = 1;
-  music.currentTime = 0;
-
-  music.play().then(() => {
-    document.getElementById("main").style.display="none";
-    document.getElementById("surprise").style.display="flex";
-    startCinematicFlow();
-  });
+  document.getElementById("music").play();
+  document.getElementById("main").style.display="none";
+  document.getElementById("surprise").style.display="flex";
+  startFlow();
 }
 
-// FINAL BUTTON
+// No button run away
+const noBtn=document.getElementById("noBtn");
+noBtn.addEventListener("mouseover",()=>{
+  noBtn.style.left=Math.random()*300-150+"px";
+  noBtn.style.top=Math.random()*200-100+"px";
+});
+
+// Final button
 function finalChoice(){
   document.getElementById("finalBtn").style.display="none";
   document.getElementById("finalMessage").style.display="block";
 }
 
-// CINEMATIC TIMELINE
-function startCinematicFlow(){
+// Cinematic flow
+function startFlow(){
+  const firstLines=["t1","t2","t3","t4","t5","t6"];
 
-  setTimeout(()=>{ t1.style.opacity=1; },4000);
-  setTimeout(()=>{ t2.style.opacity=1; },9000);
-  setTimeout(()=>{ t3.style.opacity=1; },15000);
-  setTimeout(()=>{ t4.style.opacity=1; },21000);
-  setTimeout(()=>{ t5.style.opacity=1; },27000);
-  setTimeout(()=>{ t6.style.opacity=1; },33000);
-  setTimeout(()=>{ t7.style.opacity=1; },39000);
-  setTimeout(()=>{ t8.style.opacity=1; },45000);
-  setTimeout(()=>{ t9.style.opacity=1; },50000);
+  firstLines.forEach((id,i)=>{
+    setTimeout(()=>{
+      document.getElementById(id).style.opacity=1;
+    },4000*(i+1));
+  });
+
+  // Dramatic pause before emotional peak
+  setTimeout(()=>{
+    const t7=document.getElementById("t7");
+    t7.style.opacity=1;
+    t7.classList.add("glow");
+  },32000);
 
   setTimeout(()=>{
-    forever.style.opacity=1;
-    document.getElementById("surprise").style.background =
-      "linear-gradient(135deg,#fbc2eb,#ff9a9e)";
-  },55000);
+    document.getElementById("t8").style.opacity=1;
+  },38000);
 
   setTimeout(()=>{
-    finalBtn.style.display="inline-block";
-  },58000);
+    document.getElementById("t9").style.opacity=1;
+  },44000);
 
   setTimeout(()=>{
-    document.getElementById("surprise").classList.add("fade-white");
-  },60000);
+    document.getElementById("forever").style.opacity=1;
+  },48000);
+
+  setTimeout(()=>{
+    document.getElementById("finalBtn").style.display="inline-block";
+  },52000);
 }
 
-// BOKEH PARTICLES
-for(let i=0;i<20;i++){
-  let bokeh=document.createElement("div");
-  bokeh.className="bokeh";
-  bokeh.style.left=Math.random()*100+"vw";
-  bokeh.style.animationDelay=Math.random()*20+"s";
-  document.getElementById("surprise").appendChild(bokeh);
+// Hearts
+for(let i=0;i<25;i++){
+  let h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤️";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDelay=Math.random()*10+"s";
+  document.getElementById("surprise").appendChild(h);
+}
+
+// Sparkles
+for(let i=0;i<40;i++){
+  let s=document.createElement("div");
+  s.className="sparkle";
+  s.style.left=Math.random()*100+"vw";
+  s.style.top=Math.random()*100+"vh";
+  s.style.animationDelay=Math.random()*6+"s";
+  document.getElementById("surprise").appendChild(s);
 }
 
 </script>
 
 </body>
 </html>
+
