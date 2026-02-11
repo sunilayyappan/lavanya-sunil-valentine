@@ -9,21 +9,18 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins}
+
 body{
 height:100vh;
 overflow:hidden;
-display:flex;
-align-items:center;
-justify-content:center;
-color:white;
 }
 
-/* PASSWORD */
+/* PASSWORD SCREEN */
 #lock{
 position:fixed;inset:0;
 background:linear-gradient(135deg,#ff416c,#ff4b2b);
 display:flex;align-items:center;justify-content:center;
-z-index:99;
+z-index:99;color:white;
 }
 .lock-box{
 background:rgba(255,255,255,0.2);
@@ -37,13 +34,13 @@ margin-top:15px;padding:10px 25px;border:none;border-radius:20px;
 background:#fff;color:#ff416c;font-weight:bold;cursor:pointer;
 }
 
-/* MAIN CARD */
+/* MAIN SCREEN */
 .card{
 background:linear-gradient(135deg,#ff758c,#ff7eb3);
 height:100vh;width:100%;
 display:flex;flex-direction:column;
 align-items:center;justify-content:center;
-text-align:center;
+text-align:center;color:white;
 }
 .card h1{font-family:'Great Vibes';font-size:50px}
 .buttons{margin-top:20px}
@@ -54,81 +51,73 @@ cursor:pointer;
 .yes{background:white;color:#ff1f4a}
 .no{background:#ff1f4a;color:white}
 
-/* SURPRISE */
+/* SURPRISE CINEMATIC */
 #surprise{
 display:none;
 position:fixed;
 inset:0;
-background:linear-gradient(135deg,#fbc2eb,#a6c1ee);
+background:url("us.jpg") center/cover no-repeat;
+display:flex;
 align-items:center;
 justify-content:center;
 text-align:center;
-flex-direction:column;
-animation:fadePage 3s ease forwards;
 overflow:hidden;
 }
 
-@keyframes fadePage{
-from{opacity:0}
-to{opacity:1}
-}
-
+/* Dreamy Overlay */
 .overlay{
 position:absolute;
 inset:0;
-background:rgba(255,255,255,0.2);
-backdrop-filter:blur(10px);
+background:
+linear-gradient(135deg, rgba(255,182,193,0.3), rgba(255,105,180,0.2)),
+radial-gradient(circle at center, rgba(255,255,255,0.2), rgba(0,0,0,0.6));
+backdrop-filter:blur(4px);
 }
 
+/* Soft vignette */
+.overlay::after{
+content:"";
+position:absolute;
+inset:0;
+box-shadow:inset 0 0 200px rgba(0,0,0,0.6);
+}
+
+/* Content */
 .content{
 position:relative;
 z-index:2;
-max-width:600px;
+max-width:700px;
 padding:30px;
 color:white;
+animation:slowZoom 60s ease-in-out forwards;
 }
 
-/* PHOTO */
-.romantic-photo{
-width:180px;
-height:180px;
-border-radius:50%;
-object-fit:cover;
-margin-bottom:25px;
-opacity:0;
-transition:opacity 3s ease, transform 6s ease;
-box-shadow:0 0 0 rgba(255,255,255,0.6);
+/* Subtle cinematic zoom */
+@keyframes slowZoom{
+0%{transform:scale(1);}
+100%{transform:scale(1.06);}
 }
 
-.heartbeat{
-animation:heartbeat 3s ease-in-out infinite;
-}
-
-@keyframes heartbeat{
-0%,100%{box-shadow:0 0 20px rgba(255,255,255,0.5)}
-50%{box-shadow:0 0 40px rgba(255,182,193,0.9)}
-}
-
-/* TEXT */
+/* Text lines */
 .text-line{
 opacity:0;
-font-size:24px;
+font-size:clamp(16px,2.5vh,24px);
 margin:8px 0;
 transition:opacity 2s ease;
 }
 
 .forever{
 opacity:0;
-margin-top:25px;
-font-size:32px;
+margin-top:20px;
+font-size:clamp(24px,3vh,34px);
 font-family:'Great Vibes';
 transition:opacity 3s ease;
 }
 
-/* BUTTON */
+/* Final button */
 #finalBtn{
 display:none;
-margin-top:30px;
+margin-top:25px;
 padding:14px 35px;
 border:none;
 border-radius:30px;
@@ -140,37 +129,38 @@ cursor:pointer;
 
 #finalMessage{
 display:none;
-margin-top:20px;
-font-size:22px;
+margin-top:15px;
+font-size:20px;
 }
 
-/* LIGHT PARTICLES */
-.light{
+/* Dreamy Bokeh */
+.bokeh{
 position:absolute;
-width:6px;
-height:6px;
-background:rgba(255,255,255,0.8);
+width:12px;
+height:12px;
+background:rgba(255,255,255,0.4);
 border-radius:50%;
+filter:blur(4px);
 opacity:0;
-animation:floatLight 18s linear infinite;
+animation:bokehFloat 20s linear infinite;
 }
 
-@keyframes floatLight{
-0%{transform:translateY(100vh);opacity:0}
-10%{opacity:0.6}
-90%{opacity:0.6}
-100%{transform:translateY(-10vh);opacity:0}
+@keyframes bokehFloat{
+0%{transform:translateY(100vh) scale(0.5);opacity:0}
+10%{opacity:0.5}
+90%{opacity:0.5}
+100%{transform:translateY(-10vh) scale(1.2);opacity:0}
 }
 
-/* FADE TO WHITE */
+/* Fade to white ending */
 .fade-white{
 animation:fadeToWhite 3s forwards;
 }
-
 @keyframes fadeToWhite{
 from{opacity:1}
 to{opacity:0;background:white;}
 }
+
 </style>
 </head>
 
@@ -209,17 +199,50 @@ to{opacity:0;background:white;}
 
   <div class="content">
 
-    <img src="your-photo.jpg" class="romantic-photo" id="romanticPhoto">
-
     <div class="text-line" id="t1">Lavanya…</div>
-    <div class="text-line" id="t2">From 05-12-2024,</div>
-    <div class="text-line" id="t3">my heart found its calm.</div>
-    <div class="text-line" id="t4">You didn’t change my world.</div>
-    <div class="text-line" id="t5">You became my world.</div>
+
+    <div class="text-line" id="t2">
+      Illana… en Mooki 💖
+    </div>
+
+    <div class="text-line" id="t3">
+      05-12-2024 la un kitta pesina andha naal,
+      en life konjam konjam maari pochu.
+    </div>
+
+    <div class="text-line" id="t4">
+      Adhu perusa theriyala…
+      aana en manasu romba calm aayiduchu.
+    </div>
+
+    <div class="text-line" id="t5">
+      Un sirippu dhaan ippo en daily happiness.
+      Un kural dhaan en peace.
+    </div>
+
+    <div class="text-line" id="t6">
+      Un kanna paakum pothu,
+      enaku vera edhuvum theva illa nu thonum.
+    </div>
+
+    <div class="text-line" id="t7">
+      Nee vandhadaala en life la oru change illa…
+      Nee dhaan en life.
+    </div>
+
+    <div class="text-line" id="t8">
+      Un kooda irundha neram ellam,
+      konjam slow a poganum nu thonum.
+    </div>
+
+    <div class="text-line" id="t9">
+      Seri… innaikachu enakaaga saree katuvyaa?
+      epavum pola no soliraata 😏
+    </div>
 
     <div class="forever" id="forever">
-      I don’t want just moments with you…  
-      I want forever. 💍
+      Un kooda oru naal illa…
+      Oru vaazhkai venum. 💍
     </div>
 
     <button id="finalBtn" onclick="finalChoice()">I choose you ❤️</button>
@@ -229,7 +252,6 @@ to{opacity:0;background:white;}
     </div>
 
   </div>
-
 </div>
 
 <script>
@@ -262,47 +284,44 @@ function finalChoice(){
   document.getElementById("finalMessage").style.display="block";
 }
 
-// CINEMATIC FLOW
+// CINEMATIC TIMELINE
 function startCinematicFlow(){
 
-  setTimeout(()=>{ t1.style.opacity=1; },5000);
-  setTimeout(()=>{ t2.style.opacity=1; },10000);
-  setTimeout(()=>{ t3.style.opacity=1; },16000);
-  setTimeout(()=>{ t4.style.opacity=1; },22000);
-  setTimeout(()=>{ t5.style.opacity=1; },28000);
-
-  setTimeout(()=>{
-    romanticPhoto.style.opacity=1;
-    romanticPhoto.style.transform="scale(1.05)";
-    romanticPhoto.classList.add("heartbeat");
-  },30000);
+  setTimeout(()=>{ t1.style.opacity=1; },4000);
+  setTimeout(()=>{ t2.style.opacity=1; },9000);
+  setTimeout(()=>{ t3.style.opacity=1; },15000);
+  setTimeout(()=>{ t4.style.opacity=1; },21000);
+  setTimeout(()=>{ t5.style.opacity=1; },27000);
+  setTimeout(()=>{ t6.style.opacity=1; },33000);
+  setTimeout(()=>{ t7.style.opacity=1; },39000);
+  setTimeout(()=>{ t8.style.opacity=1; },45000);
+  setTimeout(()=>{ t9.style.opacity=1; },50000);
 
   setTimeout(()=>{
     forever.style.opacity=1;
     document.getElementById("surprise").style.background =
       "linear-gradient(135deg,#fbc2eb,#ff9a9e)";
-  },42000);
-
-  setTimeout(()=>{
-    finalBtn.style.display="inline-block";
   },55000);
 
   setTimeout(()=>{
-    document.getElementById("surprise").classList.add("fade-white");
+    finalBtn.style.display="inline-block";
   },58000);
+
+  setTimeout(()=>{
+    document.getElementById("surprise").classList.add("fade-white");
+  },60000);
 }
 
-// LIGHT PARTICLES
-for(let i=0;i<25;i++){
-  let light=document.createElement("div");
-  light.className="light";
-  light.style.left=Math.random()*100+"vw";
-  light.style.animationDelay=Math.random()*18+"s";
-  document.getElementById("surprise").appendChild(light);
+// BOKEH PARTICLES
+for(let i=0;i<20;i++){
+  let bokeh=document.createElement("div");
+  bokeh.className="bokeh";
+  bokeh.style.left=Math.random()*100+"vw";
+  bokeh.style.animationDelay=Math.random()*20+"s";
+  document.getElementById("surprise").appendChild(bokeh);
 }
 
 </script>
 
 </body>
 </html>
-
