@@ -11,7 +11,6 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins}
 body{
 height:100vh;
-background:radial-gradient(circle at top,#ff9a9e,#fad0c4);
 overflow:hidden;
 display:flex;
 align-items:center;
@@ -19,7 +18,7 @@ justify-content:center;
 color:white;
 }
 
-/* PASSWORD SCREEN */
+/* PASSWORD */
 #lock{
 position:fixed;inset:0;
 background:linear-gradient(135deg,#ff416c,#ff4b2b);
@@ -35,85 +34,142 @@ padding:12px;border:none;border-radius:20px;width:220px;text-align:center;
 }
 .lock-box button{
 margin-top:15px;padding:10px 25px;border:none;border-radius:20px;
-background:#fff;color:#ff416c;font-weight:bold;
-cursor:pointer;
-}
-
-/* HEARTS */
-.heart{position:absolute;font-size:20px;animation:float 6s linear infinite}
-@keyframes float{
-0%{transform:translateY(100vh);opacity:0}
-50%{opacity:1}
-100%{transform:translateY(-10vh);opacity:0}
+background:#fff;color:#ff416c;font-weight:bold;cursor:pointer;
 }
 
 /* MAIN CARD */
 .card{
-background:rgba(255,255,255,0.2);
-backdrop-filter:blur(12px);
-border-radius:25px;padding:30px;
-text-align:center;max-width:360px;width:90%;
+background:linear-gradient(135deg,#ff758c,#ff7eb3);
+height:100vh;width:100%;
+display:flex;flex-direction:column;
+align-items:center;justify-content:center;
+text-align:center;
 }
-h1{font-family:'Great Vibes';font-size:48px}
-.photo{
-width:140px;height:140px;border-radius:50%;
-border:4px solid white;margin:15px auto;object-fit:cover;
-}
-.buttons{display:flex;justify-content:center;gap:20px;margin-top:20px}
+.card h1{font-family:'Great Vibes';font-size:50px}
+.buttons{margin-top:20px}
 button{
 border:none;padding:12px 25px;border-radius:25px;font-size:16px;
 cursor:pointer;
 }
-.yes{background:#ff1f4a;color:white}
-.no{background:white;color:#ff1f4a;position:relative}
+.yes{background:white;color:#ff1f4a}
+.no{background:#ff1f4a;color:white}
 
 /* SURPRISE */
 #surprise{
-display:none;position:fixed;inset:0;
-background:linear-gradient(135deg,#ff758c,#ff7eb3);
-align-items:center;justify-content:center;
+display:none;
+position:fixed;
+inset:0;
+background:linear-gradient(135deg,#fbc2eb,#a6c1ee);
+align-items:center;
+justify-content:center;
 text-align:center;
 flex-direction:column;
-padding:20px;
+animation:fadePage 3s ease forwards;
+overflow:hidden;
 }
-#surprise h1{font-family:'Great Vibes';font-size:55px}
 
-/* FINAL BUTTON */
-#finalBtn{
+@keyframes fadePage{
+from{opacity:0}
+to{opacity:1}
+}
+
+.overlay{
+position:absolute;
+inset:0;
+background:rgba(255,255,255,0.2);
+backdrop-filter:blur(10px);
+}
+
+.content{
+position:relative;
+z-index:2;
+max-width:600px;
+padding:30px;
+color:white;
+}
+
+/* PHOTO */
+.romantic-photo{
+width:180px;
+height:180px;
+border-radius:50%;
+object-fit:cover;
+margin-bottom:25px;
+opacity:0;
+transition:opacity 3s ease, transform 6s ease;
+box-shadow:0 0 0 rgba(255,255,255,0.6);
+}
+
+.heartbeat{
+animation:heartbeat 3s ease-in-out infinite;
+}
+
+@keyframes heartbeat{
+0%,100%{box-shadow:0 0 20px rgba(255,255,255,0.5)}
+50%{box-shadow:0 0 40px rgba(255,182,193,0.9)}
+}
+
+/* TEXT */
+.text-line{
+opacity:0;
+font-size:24px;
+margin:8px 0;
+transition:opacity 2s ease;
+}
+
+.forever{
+opacity:0;
 margin-top:25px;
-padding:14px 30px;
+font-size:32px;
+font-family:'Great Vibes';
+transition:opacity 3s ease;
+}
+
+/* BUTTON */
+#finalBtn{
+display:none;
+margin-top:30px;
+padding:14px 35px;
 border:none;
 border-radius:30px;
 font-size:18px;
 background:white;
 color:#ff1f4a;
 cursor:pointer;
-transition:0.3s;
 }
-#finalBtn:hover{transform:scale(1.1)}
 
 #finalMessage{
 display:none;
-margin-top:25px;
+margin-top:20px;
 font-size:22px;
-animation:fadeIn 2s forwards;
 }
 
-@keyframes fadeIn{
-from{opacity:0}
-to{opacity:1}
-}
-
-/* FOREVER TEXT */
-.forever{
+/* LIGHT PARTICLES */
+.light{
 position:absolute;
-bottom:30px;
-font-size:26px;
-animation:pulse 2s infinite;
+width:6px;
+height:6px;
+background:rgba(255,255,255,0.8);
+border-radius:50%;
+opacity:0;
+animation:floatLight 18s linear infinite;
 }
-@keyframes pulse{
-0%,100%{transform:scale(1)}
-50%{transform:scale(1.1)}
+
+@keyframes floatLight{
+0%{transform:translateY(100vh);opacity:0}
+10%{opacity:0.6}
+90%{opacity:0.6}
+100%{transform:translateY(-10vh);opacity:0}
+}
+
+/* FADE TO WHITE */
+.fade-white{
+animation:fadeToWhite 3s forwards;
+}
+
+@keyframes fadeToWhite{
+from{opacity:1}
+to{opacity:0;background:white;}
 }
 </style>
 </head>
@@ -131,41 +187,54 @@ animation:pulse 2s infinite;
   </div>
 </div>
 
-<!-- MUSIC (replace src if you want Remo BGM locally) -->
-<audio id="music" loop>
-  <source src="Minnale-Theme-Music.mp3" type="audio/mp3">
+<!-- MUSIC -->
+<audio id="music" loop playsinline preload="auto">
+  <source src="remo-proposal.mp3" type="audio/mp3">
 </audio>
-
 
 <!-- MAIN -->
 <div class="card" id="main">
   <h1>Lavanya ❤️</h1>
-  <img src="https://i.imgur.com/6VBx3io.jpg" class="photo" alt="Us">
   <p>Will you be my Valentine?</p>
-
   <div class="buttons">
     <button class="yes" onclick="yes()">Yes 💖</button>
-    <button class="no" onmouseover="moveNo(this)">No 😅</button>
+    <button class="no">No 😅</button>
   </div>
 </div>
 
 <!-- SURPRISE -->
 <div id="surprise">
-  <h1>Forever Starts Now 💍</h1>
-  <p>You are my today, tomorrow & always 💕</p>
-  <p>— Sunil</p>
 
-  <button id="finalBtn" onclick="finalChoice()">I choose you ❤️</button>
+  <div class="overlay"></div>
 
-  <div id="finalMessage">
-    And I’ll keep choosing you. Always. 💖
+  <div class="content">
+
+    <img src="your-photo.jpg" class="romantic-photo" id="romanticPhoto">
+
+    <div class="text-line" id="t1">Lavanya…</div>
+    <div class="text-line" id="t2">From 05-12-2024,</div>
+    <div class="text-line" id="t3">my heart found its calm.</div>
+    <div class="text-line" id="t4">You didn’t change my world.</div>
+    <div class="text-line" id="t5">You became my world.</div>
+
+    <div class="forever" id="forever">
+      I don’t want just moments with you…  
+      I want forever. 💍
+    </div>
+
+    <button id="finalBtn" onclick="finalChoice()">I choose you ❤️</button>
+
+    <div id="finalMessage">
+      And I will keep choosing you. Every single day. 💖
+    </div>
+
   </div>
 
-  <div class="forever">Lavanya 💖 Sunil — Forever</div>
 </div>
 
 <script>
-// PASSWORD CHECK
+
+// PASSWORD
 function unlock(){
   if(document.getElementById("pass").value === "05-12-2024"){
     document.getElementById("lock").style.display="none";
@@ -174,38 +243,65 @@ function unlock(){
   }
 }
 
-// FLOATING HEARTS
-for(let i=0;i<25;i++){
-let h=document.createElement("div");
-h.className="heart";
-h.innerHTML="❤️";
-h.style.left=Math.random()*100+"vw";
-h.style.fontSize=Math.random()*20+15+"px";
-h.style.animationDelay=Math.random()*6+"s";
-document.body.appendChild(h);
-}
-
-// NO BUTTON ESCAPE
-function moveNo(b){
-b.style.transform=`translate(${Math.random()*200-100}px,${Math.random()*200-100}px)`
-}
-
-// YES CLICK
+// YES FLOW
 function yes(){
-document.getElementById("music").play();
-setTimeout(()=>{
-document.getElementById("main").style.display="none";
-document.getElementById("surprise").style.display="flex";
-},1200);
+  const music = document.getElementById("music");
+  music.volume = 1;
+  music.currentTime = 0;
+
+  music.play().then(() => {
+    document.getElementById("main").style.display="none";
+    document.getElementById("surprise").style.display="flex";
+    startCinematicFlow();
+  });
 }
 
 // FINAL BUTTON
 function finalChoice(){
-document.getElementById("finalBtn").style.display="none";
-document.getElementById("finalMessage").style.display="block";
+  document.getElementById("finalBtn").style.display="none";
+  document.getElementById("finalMessage").style.display="block";
 }
+
+// CINEMATIC FLOW
+function startCinematicFlow(){
+
+  setTimeout(()=>{ t1.style.opacity=1; },5000);
+  setTimeout(()=>{ t2.style.opacity=1; },10000);
+  setTimeout(()=>{ t3.style.opacity=1; },16000);
+  setTimeout(()=>{ t4.style.opacity=1; },22000);
+  setTimeout(()=>{ t5.style.opacity=1; },28000);
+
+  setTimeout(()=>{
+    romanticPhoto.style.opacity=1;
+    romanticPhoto.style.transform="scale(1.05)";
+    romanticPhoto.classList.add("heartbeat");
+  },30000);
+
+  setTimeout(()=>{
+    forever.style.opacity=1;
+    document.getElementById("surprise").style.background =
+      "linear-gradient(135deg,#fbc2eb,#ff9a9e)";
+  },42000);
+
+  setTimeout(()=>{
+    finalBtn.style.display="inline-block";
+  },55000);
+
+  setTimeout(()=>{
+    document.getElementById("surprise").classList.add("fade-white");
+  },58000);
+}
+
+// LIGHT PARTICLES
+for(let i=0;i<25;i++){
+  let light=document.createElement("div");
+  light.className="light";
+  light.style.left=Math.random()*100+"vw";
+  light.style.animationDelay=Math.random()*18+"s";
+  document.getElementById("surprise").appendChild(light);
+}
+
 </script>
 
 </body>
 </html>
-
